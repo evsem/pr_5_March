@@ -1,0 +1,24 @@
+* {
+  margin: 0;
+  padding: 0;
+  text-decoration: none;
+  box-sizing: border-box;
+}
+
+*::after,
+*::before {
+  box-sizing: border-box;
+}
+
+body {
+  padding: 14px 0px;
+  background-color: transparent;
+  font-family: 'Montserrat';
+  font-size: 16px;
+  font-weight: 400;
+}
+
+.App {
+  margin: 0 auto;
+  max-width: 680px;
+}
