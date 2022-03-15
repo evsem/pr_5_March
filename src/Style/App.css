@@ -18,7 +18,32 @@ body {
   font-weight: 400;
 }
 
-.App {
+.Posts {
   margin: 0 auto;
   max-width: 680px;
+}
+
+.aboutMe {
+  display: flex;
+  justify-content: center;
+  margin: 78px 0px 0px 0px;
+  font-family: 'Montserrat';
+}
+
+.aboutMe_title {
+  font-size: 32px;
+  font-weight: 300;
+  color: black;
+  letter-spacing: 3px;
+  text-align: center;
+}
+
+.titleError {
+  margin: 10px 0px;
+  font-size: 32px;
+  font-weight: 500;
+  color: brown;
+  letter-spacing: 3px;
+  text-align: center;
+  text-transform: uppercase;
 }

@@ -1,63 +1,46 @@
-import React, { useEffect, useState } from 'react'
-import PostService from './API/PostService'
-import Filter from './Components/Filter/Filter'
-import Form from './Components/Form/Form'
-import List from './Components/List/List'
-import Pagination from './Components/Pagination/Pagination'
-import { useFetching } from './Hooks/useFetching'
-import { usePosts } from './Hooks/usePosts'
-import './Style/App.css'
-import LoaderGrey from './UI/LoaderGrey/LoaderGrey'
-import { getPageCount } from './Utils/forPages'
+import React from 'react'
+import classes from './Style/App.module.css'
+import { Routes, Route, Link } from 'react-router-dom'
+
+//Импортируем страницы для их использования в навигации самого приложения
+import AboutMe from './Pages/AboutMe'
+import Posts from './Pages/Posts'
+import Error from './Pages/Error'
 
 const App = () => {
-  let [posts, setPosts] = useState([
-    { id: 1, title: 'JS', body: 'Programming language' },
-    { id: 2, title: 'Python', body: 'Programming language' },
-    { id: 3, title: 'Kotlin', body: 'Programming language' },
-    { id: 4, title: 'Ruby', body: 'Programming language' },
-    { id: 5, title: 'C', body: 'Programming language' },
-    { id: 6, title: 'Java', body: 'Programming language' },
-  ])
-  let [filter, setFilter] = useState({ query: '', sort: '' })
-  let searchedAndSelectedPosts = usePosts(posts, filter.sort, filter.query)
-  let [totalPages, setTotalPages] = useState(0)
-  let [limit, setLimit] = useState(10)
-  let [page, setPage] = useState(0)
-
-  let [fetchPost, isPostLoading, postError] = useFetching(async () => {
-    let postsToServer = await PostService.getAll(limit, page)
-    setPosts(postsToServer.data)
-    let totalCount = postsToServer.headers['x-total-count']
-    setTotalPages(getPageCount(totalCount, limit))
-  })
-  const changePage = (page) => {
-    setPage(page)
-  }
-  useEffect(() => {
-    fetchPost()
-  }, [page])
-
-  const addNewPost = (newPost) => {
-    setPosts([...posts, newPost])
-  }
-  const removePost = (post) => {
-    setPosts(posts.filter((p) => p.id !== post.id))
-  }
   return (
-    <div className="App">
-      <Form addPost_Func={addNewPost} />
-      <Filter filter={filter} setFilter={setFilter} />
+    <div className={classes.wrapper}>
+      <header className={classes.headerForHref}>
+        <Link className={classes.href} to="/aboutMe">
+          AboutMe
+        </Link>
+        <Link className={classes.href} to="/posts">
+          Posts
+        </Link>
+      </header>
+      <div>
+        <h1 className={classes.wrapper_title}>
+          Get started with React-Router 6
+        </h1>
+      </div>
 
-      {isPostLoading ? (
-        <LoaderGrey />
-      ) : (
-        <List posts={searchedAndSelectedPosts} removePost={removePost} />
-      )}
-
-      <Pagination totalCount={totalPages} changePage={changePage} />
+      <Routes>
+        <Route path="/aboutMe" element={<AboutMe />} />
+        <Route path="/posts" element={<Posts />} />
+        <Route path="*" element={<Error />} />
+      </Routes>
     </div>
   )
 }
 
 export default App
+
+/*
+Routes - оболочка для всех Route'ов
+
+Route - элемент Routes.
+<Route path="/aboutMe" element={<AboutMe />} /> - в path прописывается путь до самой страницы(/ означает корневой файл; * означает все остальные пути, которые не были прописаны вручную); element={<AboutMe />} - что должно отрисовываться при переходе на данный путь. Сам элемент обяхательно указывается внутри html-скобок.
+
+Link - создание SPA-приложения(вместо классического тега ссылки используем Link; вместо href используем to).
+Смотри пример выше
+*/

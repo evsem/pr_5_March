@@ -1,9 +1,9 @@
 .loaderGrey {
-  width: 122px;
-  height: 122px;
+  width: 150px;
+  height: 150px;
   border: 3px dashed grey;
   border-radius: 50%;
-  animation: rotate 0.8s infinite linear;
+  animation: rotate 0.02s infinite linear;
 }
 
 @keyframes rotate {
